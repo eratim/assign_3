@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" type="text/css" href="/styles/style.css">
+  <title>Blog</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <h1>Blog Posts</h1>
+  <ul>
+    <% blogPosts.forEach(post => { %>
+      <li>
+        <h2><%= post.title %></h2>
+        <p><span id="short-content"><%= post.content.substring(0, 100) %></span><span id="full-content" style="display: none;"><%= post.content %></span></p>
+        <a href="#" class="read-more">Read More</a>
+      </li>
+    <% }); %>
+  </ul>
+  <a href="/add-post">Add a new post</a>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const readMoreButtons = document.querySelectorAll(".read-more");
+  
+      readMoreButtons.forEach((button) => {
+        button.addEventListener("click", function (e) {
+          e.preventDefault();
+          const shortContent = this.parentElement.querySelector("#short-content");
+          const fullContent = this.parentElement.querySelector("#full-content");
+  
+          if (shortContent.style.display === "none") {
+            shortContent.style.display = "inline";
+            fullContent.style.display = "none";
+            this.textContent = "Read More";
+          } else {
+            shortContent.style.display = "none";
+            fullContent.style.display = "inline";
+            this.textContent = "Read Less";
+          }
+        });
+      });
+    });
+  </script>
+  <%- include('partials/footer') %>
+</body>
+</html>
